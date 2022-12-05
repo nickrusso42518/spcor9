@@ -1,0 +1,24 @@
+<native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+  <snmp-server>
+    <user xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-snmp">
+      <username>NC</username>
+      <grpname>SNMPGROUP</grpname>
+      <v3>
+        <encrypted>
+          <auth-config>
+            <algorithm>sha</algorithm>
+            <password>12345678</password>
+          </auth-config>
+          <priv-config>
+            <priv-option>
+              <aes>
+                <algorithm>128</algorithm>
+                <password>12345678</password>
+              </aes>
+            </priv-option>
+          </priv-config>
+        </encrypted>
+      </v3>
+    </user>
+  </snmp-server>
+</native>

@@ -8,7 +8,7 @@ VLANs on a Cisco NX-OS switch via the always-on Cisco DevNet sandbox.
 
 import json
 import xmltodict
-from lxml.etree import fromstring
+from lxml.etree import tostring, fromstring
 from ncclient import manager
 from ncclient.operations import RaiseMode
 
@@ -18,30 +18,37 @@ def main():
     Execution begins here.
     """
     
+    # optional: xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native"
     host_os_map = {
-        "R1": "csr",  # iosxe for physical devices
-        "R2": "iosxr",
+        "sandbox-iosxe-latest-1.cisco.com": { "os": "csr", "u": "developer", "snmp_f": '<native><snmp-server/></native>'},
+        "sandbox-iosxr-1.cisco.com": { "os": "iosxr", "u": "admin", "snmp_f": '<snmp xmlns="http://cisco.com/ns/yang/Cisco-IOS-XR-snmp-agent-cfg"/>'},
     }
-    
-    for host, os in host_os_map.items()
+
+    for host, attr in host_os_map.items():
         # Dictionary containing keyword arguments (kwargs) for connecting
         # via NETCONF. Because SSH is the underlying transport, there are
         # several minor options to set up.
         connect_params = {
             "host": host,
-            "username": "developer",
+            "username": attr["u"],
             "password": "C1sco12345",
             "hostkey_verify": False,
             "allow_agent": False,
             "look_for_keys": False,
-            "device_params": {"name": os},
+            "device_params": {"name": attr["os"]},
         }
 
         # Unpack the connect_params dict and use them to connect inside
         # of a "with" context manager. The variable "conn" represents the
         # NETCONF connection to the device.
         with manager.connect(**connect_params) as conn:
-            print("NETCONF session connected")
+            print(f"{host}: NETCONF session connected")
+            gc = conn.get_config(source="running", filter=("subtree", attr["snmp_f"]))
+            with open(f"snmp-{attr['os']}.xml", "w") as handle:
+                pretty_xml = gc.xml
+                handle.write(pretty_xml)
+                print(pretty_xml)
+            continue
 
             # Perform the update, and if success, print a message
             config_resp = config_snmp(conn, "snmp_config.json")
@@ -50,7 +57,7 @@ def main():
             if config_resp.ok and save_config_nxos(conn).ok:
                 print("Successfully saved running-config to startup-config")
 
-    print("NETCONF session disconnected")
+        print(f"{host}: NETCONF session disconnected")
 
 
 def config_snmp(conn, filename):
