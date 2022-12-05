@@ -1,0 +1,10 @@
+{
+    "Cisco-IOS-XE-flow:flow": {
+        "monitor-new": [
+            {
+                "name": "FLOW_MONITOR_IPV4",
+                "direction": "input"
+            }
+        ]
+    }
+}
