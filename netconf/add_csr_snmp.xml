@@ -30,14 +30,27 @@
           <read>SNMPVIEW</read>
         </v3>
       </group>
+      <enable xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-snmp">
+        <enable-choice>
+          <traps>
+            <isis/>
+          </traps>
+        </enable-choice>
+      </enable>
       <host-config xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-snmp">
         <ip-community>
           <ip-address>192.0.2.55</ip-address>
           <community-or-user>SNMPUSER</community-or-user>
           <version>3</version>
           <security-level>priv</security-level>
+          <trap-enable>
+            <isis/>
+          </trap-enable>
         </ip-community>
       </host-config>
+      <trap-source xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-snmp">
+        <GigabitEthernet>1</GigabitEthernet>
+      </trap-source>
       <view xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-snmp">
         <name>SNMPVIEW</name>
         <mib>iso</mib>

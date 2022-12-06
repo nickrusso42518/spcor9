@@ -17,8 +17,10 @@
         <user-name>SNMPUSER</user-name>
         <group-name>SNMPGROUP</group-name>
         <version>v3</version>
+        <authentication-password-configured></authentication-password-configured>
         <algorithm>sha</algorithm>
         <authentication-password>055A545C7519185E41</authentication-password>
+        <privacy-password-configured></privacy-password-configured>
         <priv-algorithm>aes128</priv-algorithm>
         <privacy-password>11584B5643475D5B5C</privacy-password>
         <user-auth-type>1</user-auth-type>
@@ -40,5 +42,11 @@
         <read-view>SNMPVIEW</read-view>
       </group>
     </groups>
+    <notification>
+      <isis xmlns="http://cisco.com/ns/yang/Cisco-IOS-XR-clns-isis-cfg">
+        <all>true</all>
+      </isis>
+    </notification>
+    <trap-source>MgmtEth0/RP0/CPU0/0</trap-source>
   </snmp>
 </config>
