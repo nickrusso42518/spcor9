@@ -26,7 +26,7 @@ def main():
     auth = ("developer", "C1sco12345")
 
     # Read declarative state with the YANG-modeled, JSON-encoded data to add
-    with open("nf_config.json", "r") as handle:
+    with open("add_csr_nf.json", "r") as handle:
         netflow_data = json.load(handle)
 
     # Create HTTP headers to indicate YANG/JSON data being sent and received.
@@ -49,8 +49,8 @@ def main():
 
         # Raise error if request failed; otherwise, do nothing
         netflow_add_resp.raise_for_status()
+        print("Added generic NetFlow configuration successfully")
 
-        # Apply NetFlow to interfaces
         # Issue HTTP PUT request to modify the NetFlow config.
         intf_id = 1
         netflow_path = f"interface/Loopback/{intf_id}/ip/flow"
@@ -61,6 +61,7 @@ def main():
             json=netflow_data["intf_apply"],
         )
         netflow_intf_resp.raise_for_status()
+        print("Enabled NetFlow on target interface")
 
         # Save configuration to ensure the changes persist across reboots.
         save_config_resp = client.post(
@@ -71,9 +72,9 @@ def main():
 
         # If successful, indicate so, or print error message
         if save_config_resp.is_success:
-            print("Saved configuration")
+            print("Saved configuration successfully")
         else:
-            print("Save config FAILED")
+            print("Failed to save configuration")
 
 
 if __name__ == "__main__":
