@@ -2,21 +2,6 @@
 <rpc-reply xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="urn:uuid:67c57de8-49b7-4b08-9e11-1bc5fd09cdef">
   <data>
     <snmp xmlns="http://cisco.com/ns/yang/Cisco-IOS-XR-snmp-agent-cfg">
-      <trap-hosts>
-        <trap-host>
-          <ip-address>192.0.2.55</ip-address>
-          <default-user-communities>
-            <default-user-community>
-              <community-name>SNMPUSER</community-name>
-              <version>3</version>
-              <security-level>privacy</security-level>
-              <basic-trap-types>0</basic-trap-types>
-              <advanced-trap-types1>0</advanced-trap-types1>
-              <advanced-trap-types2>0</advanced-trap-types2>
-            </default-user-community>
-          </default-user-communities>
-        </trap-host>
-      </trap-hosts>
       <users>
         <user>
           <user-name>SNMPUSER</user-name>
