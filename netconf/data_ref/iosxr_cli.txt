@@ -1,0 +1,6 @@
+snmp-server host 10.0.90.22 traps version 3 priv SNMPUSER
+snmp-server user SNMPUSER SNMPGROUP v3 auth sha clear authPass priv aes 128 clear privPass
+snmp-server view SNMPVIEW iso included
+snmp-server group SNMPGROUP v3 priv read SNMPVIEW
+snmp-server trap-source MgmtEth0/RP0/CPU0/0
+snmp-server traps isis all

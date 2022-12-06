@@ -39,7 +39,7 @@
       </enable>
       <host-config xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-snmp">
         <ip-community>
-          <ip-address>192.0.2.55</ip-address>
+          <ip-address>10.0.90.22</ip-address>
           <community-or-user>SNMPUSER</community-or-user>
           <version>3</version>
           <security-level>priv</security-level>
