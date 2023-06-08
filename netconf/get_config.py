@@ -18,15 +18,13 @@ def main():
 
     # Include OS, target datastore, and save_config function reference per host
     host_os_map = {
-        "sandbox-iosxe-latest-1.cisco.com": {
+        "10.0.90.3": {
             "os": "csr",
-            "u": "developer",
             "ds": "running",
             "save": save_config_iosxe,
         },
-        "sandbox-iosxr-1.cisco.com": {
+        "10.0.90.12": {
             "os": "iosxr",
-            "u": "admin",
             "ds": "candidate",
             "save": save_config_iosxr,
         },
@@ -38,8 +36,8 @@ def main():
         # several minor options to set up.
         connect_params = {
             "host": host,
-            "username": attr["u"],
-            "password": "C1sco12345",
+            "username": "labadmin",
+            "password": "labadmin",
             "hostkey_verify": False,
             "allow_agent": False,
             "look_for_keys": False,

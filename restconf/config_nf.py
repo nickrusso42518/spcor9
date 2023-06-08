@@ -9,21 +9,23 @@ policies on a Cisco IOS-XE router via the always-on Cisco DevNet sandbox.
 import json
 import httpx
 
+# Centralized inputs for easy modification
+USERNAME = "labadmin"
+PASSWORD = "labadmin"
+HOST = "10.0.90.8"
+PE_INTF = "GigabitEthernet=2.3078"
 
 def main():
     """
     Execution begins here.
     """
 
-    # The API path below is what the DevNet sandbox uses for API testing,
-    # which may change in the future. Be sure to check the IP address as
-    # I suspect this changes frequently. See here for more details:
-    # https://developer.cisco.com/site/ios-xe
-    api_path = "https://ios-xe-mgmt-latest.cisco.com:443/restconf"
+    # Define the basic API path (sometimes called base URL)
+    api_path = f"https://{HOST}:443/restconf"
 
-    # Create 2-tuple for "basic" authentication using Cisco DevNet credentials.
+    # Create 2-tuple for "basic" authentication using defined credentials.
     # No fancy tokens needed to get basic RESTCONF working on Cisco IOS-XE.
-    auth = ("developer", "C1sco12345")
+    auth = (USERNAME, PASSWORD)
 
     # Read declarative state with the YANG-modeled, JSON-encoded data to add
     with open("add_csr_nf.json", "r") as handle:
@@ -36,7 +38,7 @@ def main():
     }
 
     # Open long-lived TLS sessions to improve performance. Also, disable
-    # certificate validation as sandbox uses self-signed certificates.
+    # certificate validation as routers currently use self-signed TLS certs.
     with httpx.Client(verify=False) as client:
 
         # Issue HTTP PUT request to modify the NetFlow config.
@@ -51,9 +53,8 @@ def main():
         netflow_add_resp.raise_for_status()
         print("Added generic NetFlow configuration successfully")
 
-        # Issue HTTP PUT request to modify the NetFlow config.
-        intf_id = 1
-        netflow_path = f"interface/Loopback/{intf_id}/ip/flow"
+        # Issue HTTP PUT request to apply the NetFlow policy.
+        netflow_path = f"interface/{PE_INTF}/ip/flow"
         netflow_intf_resp = client.put(
             f"{api_path}/data/Cisco-IOS-XE-native:native/{netflow_path}",
             headers=post_headers,
