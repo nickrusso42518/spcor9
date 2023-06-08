@@ -8,7 +8,6 @@ VLANs on a Cisco NX-OS switch via the always-on Cisco DevNet sandbox.
 
 from lxml.etree import fromstring
 from ncclient import manager
-from ncclient.operations import RPCError
 
 
 def main():
@@ -43,7 +42,6 @@ def main():
             "look_for_keys": False,
             "device_params": {"name": attr["os"]},
         }
-
 
         # Unpack the connect_params dict and use them to connect inside
         # of a "with" context manager. The variable "conn" represents the

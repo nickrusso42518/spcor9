@@ -13,15 +13,12 @@ def main():
     """
     Execution begins here.
     """
-    
+
     # Identify the OS of each host so ncclient can properly connect
     host_os_map = {
-        "sandbox-iosxe-latest-1.cisco.com": "csr",
-        "sandbox-iosxr-1.cisco.com": "iosxr",
+        "10.0.90.2": "csr",
+        "10.0.90.11": "iosxr",
     }
-
-    # TEMP
-    LOGIN = {"csr": "developer", "iosxr": "admin"}
 
     for host, os in host_os_map.items():
         # Dictionary containing keyword arguments (kwargs) for connecting
@@ -29,8 +26,8 @@ def main():
         # several minor options to set up.
         connect_params = {
             "host": host,
-            "username": LOGIN[os],
-            "password": "C1sco12345",
+            "username": "labadmin",
+            "password": "labadmin",
             "hostkey_verify": False,
             "allow_agent": False,
             "look_for_keys": False,
@@ -45,7 +42,7 @@ def main():
 
             # Create new files for each host to enumerate server capabilities.
             # Then, use Linux tools like grep to search for items of interest.
-            with open (f"{host}_scap.txt", "w") as handle:
+            with open(f"data_ref/{host}_server_cap.txt", "w") as handle:
                 handle.write("\n".join(conn.server_capabilities))
 
         # Indicate disconnection when "with" context ends
