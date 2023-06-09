@@ -49,12 +49,12 @@ influxdb-data:
 # to capture new telegraf config. Expose the gRPC/SNMP ports on telegraf.
 # Retain all existing env vars and other configuration.
 telegraf:
-    build: telegraf
+    build: "telegraf"
     ports:
-        - 162:162  # SNMP traps
-        - 50051:50051  # gRPC telemetry
+        - "162:162/udp"     # SNMP traps
+        - "50051:50051/tcp" # gRPC telemetry
     links:
-        - influxdb:influxdb
+        - "influxdb:influxdb"
     environment:
         HOST_NAME: "telegraf"
         INFLUXDB_HOST: "influxdb"
@@ -62,6 +62,6 @@ telegraf:
         DATABASE: "telegraf"
     tty: true
     volumes:
-        - /var/run/docker.sock:/var/run/docker.sock
+        - "/var/run/docker.sock:/var/run/docker.sock"
     privileged: true
 ...

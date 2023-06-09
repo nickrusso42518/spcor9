@@ -1,4 +1,4 @@
-FROM matisq/telegraf:latest
+FROM telegraf:1.16.0
 MAINTAINER Mateusz Trojak <mateusz.trojak@gmail.com>
 LABEL version="1.1"
 LABEL description="Telegraf docker image with custom setup"

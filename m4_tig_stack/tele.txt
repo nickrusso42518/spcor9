@@ -1,0 +1,7 @@
+telemetry ietf subscription 1
+ encoding encode-kvgpb
+ filter xpath /process-cpu-ios-xe-oper:cpu-usage/cpu-utilization/five-seconds
+ source-vrf MGMT
+ stream yang-push
+ update-policy periodic 1000
+ receiver ip address 10.0.90.22 50051 protocol grpc-tcp

@@ -2,7 +2,7 @@
   <snmp xmlns="http://cisco.com/ns/yang/Cisco-IOS-XR-snmp-agent-cfg">
     <trap-hosts>
      <trap-host>
-      <ip-address>10.0.90.22</ip-address>
+      <ip-address>192.168.5.22</ip-address>
       <default-user-communities>
        <default-user-community>
         <community-name>SNMPUSER</community-name>
@@ -45,6 +45,6 @@
       <all>true</all>
      </isis>
     </notification>
-    <trap-source>MgmtEth0/0/CPU0/0</trap-source>
+    <trap-source>Loopback0</trap-source>
   </snmp>
 </config>

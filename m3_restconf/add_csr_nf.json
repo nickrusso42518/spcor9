@@ -40,9 +40,11 @@
           "name": "FLOW_EXPORTER",
           "destination": {
             "ipdest": {
-              "ip": "10.0.90.22",
-              "vrf": "MGMT"
+              "ip": "192.168.5.22"
             }
+          },
+          "source": {
+            "Loopback": 0
           },
           "transport": {
             "udp": 2055

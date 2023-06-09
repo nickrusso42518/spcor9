@@ -49,7 +49,7 @@ def main():
         with manager.connect(**connect_params) as conn:
             print(f"{host}: NETCONF session connected")
             get_resp = conn.get_config(source="running")
-            with open(f"{host}.txt", "w") as handle:
+            with open(f"data_ref/{host}_config.txt", "w") as handle:
                 handle.write(get_resp.xml)
 
         # Indicate disconnection when "with" context ends
