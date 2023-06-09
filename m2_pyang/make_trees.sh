@@ -3,6 +3,11 @@
 
 pyang_path="yang/vendor/cisco/xe/1741"
 
+echo "Producing flow containers to augment native"
+pyang --format tree --path $pyang_path \
+  --output data_ref/xe_flow.txt \
+  $pyang_path/Cisco-IOS-XE-flow.yang
+
 # Option 1: Target interfaces, view source groupings
 echo "Producing interface groupings"
 pyang --format tree --path $pyang_path \

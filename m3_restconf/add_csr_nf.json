@@ -40,7 +40,8 @@
           "name": "FLOW_EXPORTER",
           "destination": {
             "ipdest": {
-              "ip": "10.0.90.22"
+              "ip": "10.0.90.22",
+              "vrf": "MGMT"
             }
           },
           "transport": {

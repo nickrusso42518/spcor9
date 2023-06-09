@@ -1,0 +1,3 @@
+python -m netflow.collector -p 2055 -D
+gunzip x.gz
+vim x

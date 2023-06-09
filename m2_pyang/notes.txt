@@ -1,1 +1,1 @@
-pyang -f tree -p yang/vendor/cisco/xe/1731 yang/vendor/cisco/xe/1731/Cisco-IOS-XE-interfaces.yang --tree-print-groupings -o intf.txt
+line 8549
