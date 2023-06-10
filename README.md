@@ -1,2 +1,2 @@
 # SP automation for SPCOR
-Temporary repo
+Temporary repo. Please visit http://njrusmc.net/course/course.html for completed courses.

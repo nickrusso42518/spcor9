@@ -3,7 +3,7 @@
 """
 Author: Nick Russo
 Purpose: Using RESTCONF with IOS-XE specific YANG models to configure NetFlow
-policies on a Cisco IOS-XE router via the always-on Cisco DevNet sandbox.
+policies on a Cisco IOS-XE router.
 """
 
 import json

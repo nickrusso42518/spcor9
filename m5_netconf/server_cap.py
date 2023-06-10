@@ -2,8 +2,8 @@
 
 """
 Author: Nick Russo
-Purpose: Using NETCONF with Openconfig YANG models to manage Ethernet
-VLANs on a Cisco NX-OS switch via the always-on Cisco DevNet sandbox.
+Purpose: Using NETCONF to collect IOS-XE/XR server capabilities
+and write them to disk in XML format.
 """
 
 from ncclient import manager

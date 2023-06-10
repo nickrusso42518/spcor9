@@ -2,8 +2,8 @@
 
 """
 Author: Nick Russo
-Purpose: Using NETCONF with Openconfig YANG models to manage Ethernet
-VLANs on a Cisco NX-OS switch via the always-on Cisco DevNet sandbox.
+Purpose: Using NETCONF to collect IOS-XE/XR running configurations
+and write them to disk in XML format.
 """
 
 from lxml.etree import fromstring
@@ -49,7 +49,7 @@ def main():
         with manager.connect(**connect_params) as conn:
             print(f"{host}: NETCONF session connected")
             get_resp = conn.get_config(source="running")
-            with open(f"data_ref/{host}_config.txt", "w") as handle:
+            with open(f"data_ref/{host}_config.xml", "w") as handle:
                 handle.write(get_resp.xml)
 
         # Indicate disconnection when "with" context ends

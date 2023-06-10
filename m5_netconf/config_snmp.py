@@ -2,8 +2,8 @@
 
 """
 Author: Nick Russo
-Purpose: Using NETCONF with Openconfig YANG models to manage Ethernet
-VLANs on a Cisco NX-OS switch via the always-on Cisco DevNet sandbox.
+Purpose: Using NETCONF to configure SNMP on IOS-XE/XR devices
+based on a pre-made XML input file. Save config when complete.
 """
 
 from lxml.etree import fromstring
