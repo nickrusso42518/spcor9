@@ -1,8 +1,17 @@
-usr/share/snmp/mibs
+test isis lsp purge
+L3283
 
-cat /etc/snmp/snmp.conf 
-# As the snmp packages come without MIB files due to license reasons, loading
-# of MIBs is disabled by default. If you added the MIBs you can reenable
-# loading them by commenting out the following line.
-mibs :
-mibdirs : $HOME/.snmp/mibs:/usr/share/snmp/mibs:/usr/share/snmp/mibs/iana:/usr/share/snmp/mibs/ietf:/usr/share/mibs/site:/usr/share/snmp/mibs:/usr/share/mibs/iana:/usr/share/mibs/ietf:/usr/share/mibs/netsnmp:/usr/share/snmp/mibs/custom:$MY_ADDITIONAL_MIBDIRS
+grafana
+http://10.0.90.22:3000
+admin/admin
+
+docker exec -it x bash
+
+CSR03#show snmp mib ifmib ifindex | include 2[456]
+GigabitEthernet2.3038: Ifindex = 25
+GigabitEthernet2.3023: Ifindex = 26
+GigabitEthernet2.3035: Ifindex = 24
+
+ciiNotificationEntry.1 (1.3.6.1.4.1.9.10.118.1.10.1.1): sender system ID
+ciiNotificationEntry.13 (1.3.6.1.4.1.9.10.118.1.10.1.13): level 1 or 2
+ciiNotificationEntry.1 (1.3.6.1.4.1.9.10.118.1.3.2.1.2): affected interface

@@ -1,0 +1,46 @@
+devices device csr02
+ address   10.0.90.2
+ port      22
+ ssh host-key ssh-rsa
+ authgroup default
+ device-type cli ned-id cisco-ios-cli-3.8
+ device-type cli protocol ssh
+ state admin-state unlocked
+devices device csr03
+ address   10.0.90.3
+ port      22
+ ssh host-key ssh-rsa
+ authgroup default
+ device-type cli ned-id cisco-ios-cli-3.8
+ device-type cli protocol ssh
+ state admin-state unlocked
+devices device csr05
+ address   10.0.90.5
+ port      22
+ ssh host-key ssh-rsa
+ authgroup default
+ device-type cli ned-id cisco-ios-cli-3.8
+ device-type cli protocol ssh
+ state admin-state unlocked
+devices device csr08
+ address   10.0.90.8
+ port      22
+ ssh host-key ssh-rsa
+ authgroup default
+ device-type cli ned-id cisco-ios-cli-3.8
+ device-type cli protocol ssh
+ state admin-state unlocked
+devices device xrv11
+ address   10.0.90.11
+ port      23
+ authgroup default
+ device-type cli ned-id cisco-iosxr-cli-3.5
+ device-type cli protocol telnet
+ state admin-state unlocked
+devices device xrv12
+ address   10.0.90.12
+ port      23
+ authgroup default
+ device-type cli ned-id cisco-iosxr-cli-3.5
+ device-type cli protocol telnet
+ state admin-state unlocked
