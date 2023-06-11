@@ -1,0 +1,19 @@
+config
+mdt 1
+device [ csr08 xrv_sbx ]
+xpath /process-cpu-ios-xe-oper:cpu-usage/cpu-utilization
+xe_src_addr 10.0.0.8
+sample 1000
+rx_ip 192.168.5.22
+rx_port 50051
+
+mdt 2
+device [ csr08 xrv_sbx ]
+xpath /memory-ios-xe-oper:memory-statistics/memory-statistic
+xe_src_addr 10.0.0.8
+sample 1000
+rx_ip 192.168.5.22
+rx_port 50051
+commit
+end
+

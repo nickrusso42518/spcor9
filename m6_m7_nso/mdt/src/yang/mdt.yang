@@ -36,23 +36,24 @@ module mdt {
       type string;
     }
 
+    leaf xe_src_addr {
+      tailf:info "XE only: source IPv4 address";
+      type inet:ipv4-address;
+    }
+
     leaf sample {
       tailf:info "sample interval in centiseconds (1/100th)";
       type uint32;
     }
 
-    list rx_list {
-      key rx_ip;
+    leaf rx_ip {
+      tailf:info "telemetry receiver IPv4 address";
+      type inet:ipv4-address;
+    }
 
-      leaf rx_ip {
-        tailf:info "telemetry receiver IPv4 address";
-        type inet:ipv4-address;
-      }
-
-      leaf rx_port {
-        tailf:info "telemetry receiver TCP/UDP port";
-        type uint16;
-      }
+    leaf rx_port {
+      tailf:info "telemetry receiver TCP/UDP port";
+      type uint16;
     }
   }
 }

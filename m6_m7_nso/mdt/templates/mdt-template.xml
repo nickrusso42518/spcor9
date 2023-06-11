@@ -12,6 +12,7 @@
               <filter>
                 <xpath>{/xpath}</xpath>
               </filter>
+              <source-address>{/xe_src_addr}</source-address>
               <stream>yang-push</stream>
               <update-policy>
                 <periodic>{/sample}</periodic>
@@ -32,14 +33,15 @@
           <model-driven>
             <destination-group>
               <id>{/sub_id}</id>
-              <vrf>TST</vrf>
               <address-family>
                 <ipv4>
                   <address>{/rx_ip}</address>
                   <port>{/rx_port}</port>
                   <encoding>self-describing-gpb</encoding>
                   <protocol>
-                    <grpc/>
+                    <grpc>
+                      <no-tls/>
+                    </grpc>
                   </protocol>
                 </ipv4>
               </address-family>
@@ -52,6 +54,9 @@
             </sensor-group>
             <subscription>
               <id>{/sub_id}</id>
+              <source-interface>
+                <Loopback>0</Loopback>
+              </source-interface>
               <sensor-group-id>
                 <name>{/sub_id}</name>
                 <sample-interval>{/sample}0</sample-interval>
