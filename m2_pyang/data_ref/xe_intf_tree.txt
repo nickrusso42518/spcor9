@@ -4,26 +4,39 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
     +---- mcast-group
        +---- multicast-group-min?   inet:ipv4-address
        +---- multicast-group-max?   inet:ipv4-address
+       +---- local-routing?         empty
   grouping nve-member-vni-ir-deprecated-grouping
     x---- ingress-replication?   inet:ipv4-address
   grouping nve-member-vni-ir-group-grouping
-    +---- ingress-replication-config
-    |  +---- cp-signal?   empty
+    +---- ir-cp-config
+    |  +---- ingress-replication?   empty
+    |  +---- local-routing?         empty
+    +---- ir-peer-config
     |  +---- peer-addr*   inet:ipv4-address
+    x---- ingress-replication-config
+    |  x---- cp-signal?   empty
+    |  x---- peer-addr*   inet:ipv4-address
     x---- ingress-replication?          inet:ipv4-address
   grouping nve-member-vni-no-grouping
     x---- ingress-replication?   inet:ipv4-address
     +---- mcast-group
        +---- multicast-group-min?   inet:ipv4-address
        +---- multicast-group-max?   inet:ipv4-address
+       +---- local-routing?         empty
   grouping nve-member-vni-grouping
-    +---- ingress-replication-config
-    |  +---- cp-signal?   empty
+    +---- ir-cp-config
+    |  +---- ingress-replication?   empty
+    |  +---- local-routing?         empty
+    +---- ir-peer-config
     |  +---- peer-addr*   inet:ipv4-address
+    x---- ingress-replication-config
+    |  x---- cp-signal?   empty
+    |  x---- peer-addr*   inet:ipv4-address
     x---- ingress-replication?          inet:ipv4-address
     +---- mcast-group
        +---- multicast-group-min?   inet:ipv4-address
        +---- multicast-group-max?   inet:ipv4-address
+       +---- local-routing?         empty
   grouping storm-control-threshold-grouping
     +---- level
        +---- threshold
@@ -139,7 +152,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
     +---- description?                string
     +---- switchport-conf
     |  +---- switchport?   boolean
-    +---- switchport {ios-features:switching-platform}?
+    +---- switchport-config
+    |  +---- switchport {ios-features:switching-platform}?
+    x---- switchport {ios-features:switching-platform}?
     +---- stackwise-virtual
     |  +---- link?                    uint8
     |  +---- dual-active-detection?   empty
@@ -419,21 +434,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
     |  |  |  +---- (apply-type)?
     |  |  |     +--:(apply-common)
     |  |  |     |  +---- common-acl
-    |  |  |     |     +---- common    ios-types:exp-acl-type
-    |  |  |     |     +---- in?       empty
+    |  |  |     |     +---- common?     ios-types:exp-acl-type
+    |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+    |  |  |     |     +---- in?         empty
     |  |  |     +--:(apply-intf)
     |  |  |        +---- acl
-    |  |  |           +---- acl-name    ios-types:exp-acl-type
+    |  |  |           +---- acl-name?   ios-types:exp-acl-type
     |  |  |           +---- in?         empty
     |  |  +---- out
     |  |     +---- (apply-type)?
     |  |        +--:(apply-common)
     |  |        |  +---- common-acl
-    |  |        |     +---- common    ios-types:exp-acl-type
-    |  |        |     +---- out?      empty
+    |  |        |     +---- common?     ios-types:exp-acl-type
+    |  |        |     +---- acl-name?   ios-types:exp-acl-type
+    |  |        |     +---- out?        empty
     |  |        +--:(apply-intf)
     |  |           +---- acl
-    |  |              +---- acl-name    ios-types:exp-acl-type
+    |  |              +---- acl-name?   ios-types:exp-acl-type
     |  |              +---- out?        empty
     |  +---- arp
     |  |  +---- inspection
@@ -922,7 +939,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -1202,21 +1221,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -1610,7 +1631,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -1890,21 +1913,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -2298,7 +2323,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -2578,21 +2605,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -2988,7 +3017,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |     +---- description?                string
        |     +---- switchport-conf
        |     |  +---- switchport?   boolean
-       |     +---- switchport {ios-features:switching-platform}?
+       |     +---- switchport-config
+       |     |  +---- switchport {ios-features:switching-platform}?
+       |     x---- switchport {ios-features:switching-platform}?
        |     +---- stackwise-virtual
        |     |  +---- link?                    uint8
        |     |  +---- dual-active-detection?   empty
@@ -3268,21 +3299,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |     |  |  |  +---- (apply-type)?
        |     |  |  |     +--:(apply-common)
        |     |  |  |     |  +---- common-acl
-       |     |  |  |     |     +---- common    ios-types:exp-acl-type
-       |     |  |  |     |     +---- in?       empty
+       |     |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |     |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |     |  |  |     |     +---- in?         empty
        |     |  |  |     +--:(apply-intf)
        |     |  |  |        +---- acl
-       |     |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |     |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |     |  |  |           +---- in?         empty
        |     |  |  +---- out
        |     |  |     +---- (apply-type)?
        |     |  |        +--:(apply-common)
        |     |  |        |  +---- common-acl
-       |     |  |        |     +---- common    ios-types:exp-acl-type
-       |     |  |        |     +---- out?      empty
+       |     |  |        |     +---- common?     ios-types:exp-acl-type
+       |     |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |     |  |        |     +---- out?        empty
        |     |  |        +--:(apply-intf)
        |     |  |           +---- acl
-       |     |  |              +---- acl-name    ios-types:exp-acl-type
+       |     |  |              +---- acl-name?   ios-types:exp-acl-type
        |     |  |              +---- out?        empty
        |     |  +---- arp
        |     |  |  +---- inspection
@@ -3681,7 +3714,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -3961,21 +3996,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -4373,7 +4410,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -4653,21 +4692,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -5061,7 +5102,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -5341,21 +5384,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -5749,7 +5794,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -6029,21 +6076,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -6462,7 +6511,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -6742,21 +6793,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -7175,7 +7228,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -7455,21 +7510,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -7863,7 +7920,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -8143,21 +8202,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -8553,7 +8614,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -8833,21 +8896,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -9266,7 +9331,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -9546,21 +9613,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -9956,7 +10025,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -10236,21 +10307,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -10646,7 +10719,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -10926,21 +11001,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -11359,7 +11436,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -11639,21 +11718,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -12725,7 +12806,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -13005,21 +13088,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -13415,7 +13500,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -13695,21 +13782,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -14104,7 +14193,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -14384,21 +14475,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -14792,7 +14885,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -15072,21 +15167,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -15480,7 +15577,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -15760,21 +15859,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -16169,7 +16270,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |     +---- description?                string
        |     +---- switchport-conf
        |     |  +---- switchport?   boolean
-       |     +---- switchport {ios-features:switching-platform}?
+       |     +---- switchport-config
+       |     |  +---- switchport {ios-features:switching-platform}?
+       |     x---- switchport {ios-features:switching-platform}?
        |     +---- stackwise-virtual
        |     |  +---- link?                    uint8
        |     |  +---- dual-active-detection?   empty
@@ -16449,21 +16552,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |     |  |  |  +---- (apply-type)?
        |     |  |  |     +--:(apply-common)
        |     |  |  |     |  +---- common-acl
-       |     |  |  |     |     +---- common    ios-types:exp-acl-type
-       |     |  |  |     |     +---- in?       empty
+       |     |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |     |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |     |  |  |     |     +---- in?         empty
        |     |  |  |     +--:(apply-intf)
        |     |  |  |        +---- acl
-       |     |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |     |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |     |  |  |           +---- in?         empty
        |     |  |  +---- out
        |     |  |     +---- (apply-type)?
        |     |  |        +--:(apply-common)
        |     |  |        |  +---- common-acl
-       |     |  |        |     +---- common    ios-types:exp-acl-type
-       |     |  |        |     +---- out?      empty
+       |     |  |        |     +---- common?     ios-types:exp-acl-type
+       |     |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |     |  |        |     +---- out?        empty
        |     |  |        +--:(apply-intf)
        |     |  |           +---- acl
-       |     |  |              +---- acl-name    ios-types:exp-acl-type
+       |     |  |              +---- acl-name?   ios-types:exp-acl-type
        |     |  |              +---- out?        empty
        |     |  +---- arp
        |     |  |  +---- inspection
@@ -16970,22 +17075,32 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |     |  +---- mcast-group
        |  |     |     +---- multicast-group-min?   inet:ipv4-address
        |  |     |     +---- multicast-group-max?   inet:ipv4-address
-       |  |     +---- ingress-replication-config
-       |  |     |  +---- cp-signal?   empty
+       |  |     |     +---- local-routing?         empty
+       |  |     +---- ir-cp-config
+       |  |     |  +---- ingress-replication?   empty
+       |  |     |  +---- local-routing?         empty
+       |  |     +---- ir-peer-config
        |  |     |  +---- peer-addr*   inet:ipv4-address
+       |  |     x---- ingress-replication-config
+       |  |     |  x---- cp-signal?   empty
+       |  |     |  x---- peer-addr*   inet:ipv4-address
        |  |     x---- ingress-replication?          inet:ipv4-address
        |  |     +---- mcast-group
        |  |     |  +---- multicast-group-min?   inet:ipv4-address
        |  |     |  +---- multicast-group-max?   inet:ipv4-address
+       |  |     |  +---- local-routing?         empty
        |  |     +---- no
        |  |        x---- ingress-replication?   inet:ipv4-address
        |  |        +---- mcast-group
        |  |           +---- multicast-group-min?   inet:ipv4-address
        |  |           +---- multicast-group-max?   inet:ipv4-address
+       |  |           +---- local-routing?         empty
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -17265,21 +17380,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -17688,7 +17805,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -17968,21 +18087,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -18377,7 +18498,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |     +---- description?                string
        |     +---- switchport-conf
        |     |  +---- switchport?   boolean
-       |     +---- switchport {ios-features:switching-platform}?
+       |     +---- switchport-config
+       |     |  +---- switchport {ios-features:switching-platform}?
+       |     x---- switchport {ios-features:switching-platform}?
        |     +---- stackwise-virtual
        |     |  +---- link?                    uint8
        |     |  +---- dual-active-detection?   empty
@@ -18657,21 +18780,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |     |  |  |  +---- (apply-type)?
        |     |  |  |     +--:(apply-common)
        |     |  |  |     |  +---- common-acl
-       |     |  |  |     |     +---- common    ios-types:exp-acl-type
-       |     |  |  |     |     +---- in?       empty
+       |     |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |     |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |     |  |  |     |     +---- in?         empty
        |     |  |  |     +--:(apply-intf)
        |     |  |  |        +---- acl
-       |     |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |     |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |     |  |  |           +---- in?         empty
        |     |  |  +---- out
        |     |  |     +---- (apply-type)?
        |     |  |        +--:(apply-common)
        |     |  |        |  +---- common-acl
-       |     |  |        |     +---- common    ios-types:exp-acl-type
-       |     |  |        |     +---- out?      empty
+       |     |  |        |     +---- common?     ios-types:exp-acl-type
+       |     |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |     |  |        |     +---- out?        empty
        |     |  |        +--:(apply-intf)
        |     |  |           +---- acl
-       |     |  |              +---- acl-name    ios-types:exp-acl-type
+       |     |  |              +---- acl-name?   ios-types:exp-acl-type
        |     |  |              +---- out?        empty
        |     |  +---- arp
        |     |  |  +---- inspection
@@ -19067,7 +19192,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -19347,21 +19474,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -19755,7 +19884,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -20035,21 +20166,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -20443,7 +20576,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -20723,21 +20858,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -21131,7 +21268,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -21411,21 +21550,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -21819,7 +21960,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -22099,21 +22242,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -22508,7 +22653,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -22788,21 +22935,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -23196,7 +23345,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -23476,21 +23627,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -23885,7 +24038,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -24165,21 +24320,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -24573,7 +24730,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -24853,21 +25012,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -25261,7 +25422,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -25541,21 +25704,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -25952,7 +26117,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -26232,21 +26399,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -26640,7 +26809,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -26920,21 +27091,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -27328,7 +27501,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -27608,21 +27783,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -28016,7 +28193,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -28296,21 +28475,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -28704,7 +28885,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -28984,21 +29167,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -29392,7 +29577,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -29672,21 +29859,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -30103,7 +30292,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -30383,21 +30574,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -30791,7 +30984,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -31071,21 +31266,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -31479,7 +31676,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  +---- description?                string
        |  +---- switchport-conf
        |  |  +---- switchport?   boolean
-       |  +---- switchport {ios-features:switching-platform}?
+       |  +---- switchport-config
+       |  |  +---- switchport {ios-features:switching-platform}?
+       |  x---- switchport {ios-features:switching-platform}?
        |  +---- stackwise-virtual
        |  |  +---- link?                    uint8
        |  |  +---- dual-active-detection?   empty
@@ -31759,21 +31958,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |  |  |  |  +---- (apply-type)?
        |  |  |  |     +--:(apply-common)
        |  |  |  |     |  +---- common-acl
-       |  |  |  |     |     +---- common    ios-types:exp-acl-type
-       |  |  |  |     |     +---- in?       empty
+       |  |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |  |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |  |     |     +---- in?         empty
        |  |  |  |     +--:(apply-intf)
        |  |  |  |        +---- acl
-       |  |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |  |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |  |  |  |           +---- in?         empty
        |  |  |  +---- out
        |  |  |     +---- (apply-type)?
        |  |  |        +--:(apply-common)
        |  |  |        |  +---- common-acl
-       |  |  |        |     +---- common    ios-types:exp-acl-type
-       |  |  |        |     +---- out?      empty
+       |  |  |        |     +---- common?     ios-types:exp-acl-type
+       |  |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |  |  |        |     +---- out?        empty
        |  |  |        +--:(apply-intf)
        |  |  |           +---- acl
-       |  |  |              +---- acl-name    ios-types:exp-acl-type
+       |  |  |              +---- acl-name?   ios-types:exp-acl-type
        |  |  |              +---- out?        empty
        |  |  +---- arp
        |  |  |  +---- inspection
@@ -32169,7 +32370,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |     +---- description?                string
        |     +---- switchport-conf
        |     |  +---- switchport?   boolean
-       |     +---- switchport {ios-features:switching-platform}?
+       |     +---- switchport-config
+       |     |  +---- switchport {ios-features:switching-platform}?
+       |     x---- switchport {ios-features:switching-platform}?
        |     +---- stackwise-virtual
        |     |  +---- link?                    uint8
        |     |  +---- dual-active-detection?   empty
@@ -32449,21 +32652,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
        |     |  |  |  +---- (apply-type)?
        |     |  |  |     +--:(apply-common)
        |     |  |  |     |  +---- common-acl
-       |     |  |  |     |     +---- common    ios-types:exp-acl-type
-       |     |  |  |     |     +---- in?       empty
+       |     |  |  |     |     +---- common?     ios-types:exp-acl-type
+       |     |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+       |     |  |  |     |     +---- in?         empty
        |     |  |  |     +--:(apply-intf)
        |     |  |  |        +---- acl
-       |     |  |  |           +---- acl-name    ios-types:exp-acl-type
+       |     |  |  |           +---- acl-name?   ios-types:exp-acl-type
        |     |  |  |           +---- in?         empty
        |     |  |  +---- out
        |     |  |     +---- (apply-type)?
        |     |  |        +--:(apply-common)
        |     |  |        |  +---- common-acl
-       |     |  |        |     +---- common    ios-types:exp-acl-type
-       |     |  |        |     +---- out?      empty
+       |     |  |        |     +---- common?     ios-types:exp-acl-type
+       |     |  |        |     +---- acl-name?   ios-types:exp-acl-type
+       |     |  |        |     +---- out?        empty
        |     |  |        +--:(apply-intf)
        |     |  |           +---- acl
-       |     |  |              +---- acl-name    ios-types:exp-acl-type
+       |     |  |              +---- acl-name?   ios-types:exp-acl-type
        |     |  |              +---- out?        empty
        |     |  +---- arp
        |     |  |  +---- inspection
@@ -32859,7 +33064,9 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
              +---- description?                string
              +---- switchport-conf
              |  +---- switchport?   boolean
-             +---- switchport {ios-features:switching-platform}?
+             +---- switchport-config
+             |  +---- switchport {ios-features:switching-platform}?
+             x---- switchport {ios-features:switching-platform}?
              +---- stackwise-virtual
              |  +---- link?                    uint8
              |  +---- dual-active-detection?   empty
@@ -33139,21 +33346,23 @@ submodule: Cisco-IOS-XE-interfaces (belongs-to Cisco-IOS-XE-native)
              |  |  |  +---- (apply-type)?
              |  |  |     +--:(apply-common)
              |  |  |     |  +---- common-acl
-             |  |  |     |     +---- common    ios-types:exp-acl-type
-             |  |  |     |     +---- in?       empty
+             |  |  |     |     +---- common?     ios-types:exp-acl-type
+             |  |  |     |     +---- acl-name?   ios-types:exp-acl-type
+             |  |  |     |     +---- in?         empty
              |  |  |     +--:(apply-intf)
              |  |  |        +---- acl
-             |  |  |           +---- acl-name    ios-types:exp-acl-type
+             |  |  |           +---- acl-name?   ios-types:exp-acl-type
              |  |  |           +---- in?         empty
              |  |  +---- out
              |  |     +---- (apply-type)?
              |  |        +--:(apply-common)
              |  |        |  +---- common-acl
-             |  |        |     +---- common    ios-types:exp-acl-type
-             |  |        |     +---- out?      empty
+             |  |        |     +---- common?     ios-types:exp-acl-type
+             |  |        |     +---- acl-name?   ios-types:exp-acl-type
+             |  |        |     +---- out?        empty
              |  |        +--:(apply-intf)
              |  |           +---- acl
-             |  |              +---- acl-name    ios-types:exp-acl-type
+             |  |              +---- acl-name?   ios-types:exp-acl-type
              |  |              +---- out?        empty
              |  +---- arp
              |  |  +---- inspection

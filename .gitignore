@@ -1,2 +1,4 @@
-m2_pyang/yang/*
+m2_pyang/yang
+m5_netconf/yang
+m6_m7_nso/yang
 **.pyc
