@@ -1,5 +1,6 @@
 # Configuring NetFlow with RESTCONF
-Reference the YANG trees displayed in module 2.
+Reference the YANG trees displayed in module 2. The `data_ref/` directory
+contains an example NetFlow capture using Python's `netflow` package.
 
 Noteworthy config:
 ```
