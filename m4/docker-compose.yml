@@ -47,7 +47,6 @@ influxdb-data:
 
 # Perform local build instead of pulling the stock image from DockerHub.
 # to capture new telegraf config. Expose the gRPC/SNMP ports on telegraf.
-# Retain all existing env vars and other configuration.
 telegraf:
     build: "telegraf"
     ports:

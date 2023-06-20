@@ -27,4 +27,4 @@ yum install -y docker-ce \
 systemctl enable docker.service
 systemctl start docker
 docker --version
-echo "Use 'sudo docker container run hello-world' to verify"
+echo "Use 'docker container run hello-world' to verify"
