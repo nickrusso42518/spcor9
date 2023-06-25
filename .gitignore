@@ -1,4 +1,5 @@
-m2_pyang/yang
-m5_netconf/yang
-m6_m7_nso/yang
+.DS_Store
+m2/yang
+m5/yang
+m6_m7/yang
 **.pyc
