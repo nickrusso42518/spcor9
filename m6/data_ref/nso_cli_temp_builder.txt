@@ -7,6 +7,7 @@ source-address 203.0.113.1
 stream yang-push
 update-policy periodic 100
 receiver ip address 192.168.5.22 50051 protocol grpc-tcp
+top
 devices device xrv11
 config
 telemetry model-driven
@@ -20,3 +21,7 @@ subscription 1
 sensor-group-id 1 sample-interval 1000
 destination-id 1
 source-interface Loopback0
+top
+show configuration | display xml
+abort
+
